@@ -1,13 +1,13 @@
 import React from 'react'
-import { Button, Icon, Input, Menu } from 'stardust'
+import { Icon, Input, Menu } from 'stardust'
 
-const {Item} = Menu
+const { Item } = Menu
 
 const SubMenu = () => {
   return (
     <Menu vertical>
       <Item>
-        <Input placeholder="Search..." />
+        <Input placeholder='Search...' />
       </Item>
 
       <Item>
@@ -21,19 +21,19 @@ const SubMenu = () => {
       </Item>
 
       <Item>
-        <Icon name="grid layout" /> Browse
+        <Icon name='grid layout' /> Browse
       </Item>
       <Item icon='grid layout'>Browse</Item>
       <Item>Messages</Item>
 
-      <div className="ui dropdown item">
+      <div className='ui dropdown item'>
         More
 
-        <i className="dropdown icon"></i>
-        <div className="menu">
-          <a className="item"><i className="edit icon"></i> Edit Profile</a>
-          <a className="item"><i className="globe icon"></i> Choose Language</a>
-          <a className="item"><i className="settings icon"></i> Account Settings</a>
+        <i className='dropdown icon'></i>
+        <div className='menu'>
+          <a className='item'><i className='edit icon'></i> Edit Profile</a>
+          <a className='item'><i className='globe icon'></i> Choose Language</a>
+          <a className='item'><i className='settings icon'></i> Account Settings</a>
         </div>
       </div>
     </Menu>

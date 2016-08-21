@@ -1,16 +1,20 @@
-import React from 'react'
-import { Button, Menu } from 'stardust'
+import React, { Component } from 'react'
+import { Menu } from 'stardust'
 
-const handleClick = () => console.log(1)
+export default class LinkItem extends Component {
+  handleClick = (name) => this.setState({ message: 'onClick handled' })
 
-const LinkItem = () => {
-  return (
-    <Menu>
-      <Menu.Item href="http://www.google.com">Visit Google</Menu.Item>
-      <Menu.Item link>Link via prop</Menu.Item>
-      <Menu.Item onClick={handleClick}>Javascript Link</Menu.Item>
-    </Menu>
-  )
+  render() {
+    return (
+      <div>
+        <Menu>
+          <Menu.Item href='http://www.google.com'>Visit Google</Menu.Item>
+          <Menu.Item link>Link via prop</Menu.Item>
+          <Menu.Item onClick={this.handleClick}>Javascript Link</Menu.Item>
+        </Menu>
+
+        <p>{this.state.message}</p>
+      </div>
+    )
+  }
 }
-
-export default LinkItem

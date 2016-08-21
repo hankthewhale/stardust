@@ -8,12 +8,13 @@ import {
 } from '../../lib'
 
 function MenuItem(props) {
-  const { active, children, className, header, href, link, onClick } = props
+  const { active, children, className, header, href, link, onClick, position } = props
   const classes = cx(
     className,
     useKeyOnly(active, 'active'),
     useKeyOnly(header, 'header'),
     useKeyOnly(link, 'link'),
+    position,
     'item',
   )
   const handleClick = (e) => {
@@ -29,6 +30,9 @@ MenuItem._meta = {
   name: 'MenuItem',
   type: META.TYPES.COLLECTION,
   parent: 'Menu',
+  props: {
+    position: ['right'],
+  },
 }
 
 MenuItem.propTypes = {
@@ -52,6 +56,9 @@ MenuItem.propTypes = {
 
   /** Render as an `a` tag instead of a `div` and called with event on MenuItem click. */
   onClick: PropTypes.func,
+
+  /** A menu item can take right position. */
+  position: PropTypes.oneOf(MenuItem._meta.props.position),
 }
 
 export default MenuItem

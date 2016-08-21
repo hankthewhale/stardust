@@ -1,17 +1,17 @@
-import _ from 'lodash'
 import cx from 'classnames'
-import React, { Children, cloneElement, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 import {
   AutoControlledComponent as Component,
   getUnhandledProps,
-  numberToWord,
   META,
   SUI,
   useKeyOnly,
+  useWidthProp,
 } from '../../lib'
 import MenuHeader from './MenuHeader'
 import MenuItem from './MenuItem'
+import MenuMenu from './MenuMenu'
 
 const _meta = {
   name: 'Menu',
@@ -56,57 +56,58 @@ export default class Menu extends Component {
 
   static Header = MenuHeader
   static Item = MenuItem
+  static Menu = MenuMenu
 
   state = {}
 
-  componentWillMount() {
-    super.componentWillMount()
-
-    const activeIndex = _.findIndex(this.props.children, child => {
-      return child.type === MenuItem && _.has(child, 'props.active') && child.props.active
-    })
-    this.trySetState({ activeIndex: _.isNumber(activeIndex) ? activeIndex : 0 })
-  }
-
-  handleItemClick = (e, index) => {
-    const { onItemClick } = this.props
-
-    this.trySetState({ activeIndex: index })
-    if (onItemClick) onItemClick(e, index)
-  }
-
-  renderChildren = () => {
-    const { children } = this.props
-    const { activeIndex } = this.state
-
-    return Children.map(children, (child, i) => {
-      const isItem = child.type === MenuItem
-      const isLink = _.has(child, 'props.href') || _.has(child, 'props.link') || _.has(child, 'props.onClick')
-
-      if (isItem) {
-        const onClick = (e) => {
-          if (isLink) this.handleItemClick(e, i)
-          if (child.props.onClick) child.props.onClick(e, i)
-        }
-
-        return cloneElement(child, { ...child.props, active: activeIndex === i, onClick })
-      }
-
-      return child
-    })
-  }
+  // componentWillMount() {
+  //   super.componentWillMount()
+  //
+  //   const activeIndex = _.findIndex(this.props.children, child => {
+  //     return child.type === MenuItem && _.has(child, 'props.active') && child.props.active
+  //   })
+  //   this.trySetState({ activeIndex: _.isNumber(activeIndex) ? activeIndex : 0 })
+  // }
+  //
+  // handleItemClick = (e, index) => {
+  //   const { onItemClick } = this.props
+  //
+  //   this.trySetState({ activeIndex: index })
+  //   if (onItemClick) onItemClick(e, index)
+  // }
+  //
+  // renderChildren = () => {
+  //   const { children } = this.props
+  //   const { activeIndex } = this.state
+  //
+  //   return Children.map(children, (child, i) => {
+  //     const isItem = child.type === MenuItem
+  //     const isLink = _.has(child, 'props.href') || _.has(child, 'props.link') || _.has(child, 'props.onClick')
+  //
+  //     if (isItem) {
+  //       const onClick = (e) => {
+  //         if (isLink) this.handleItemClick(e, i)
+  //         if (child.props.onClick) child.props.onClick(e, i)
+  //       }
+  //
+  //       return cloneElement(child, { ...child.props, active: activeIndex === i, onClick })
+  //     }
+  //
+  //     return child
+  //   })
+  // }
 
   render() {
-    const { className, vertical, widths } = this.props
+    const { className, children, vertical, widths } = this.props
     const classes = cx(
       'ui',
       className,
-      numberToWord(widths),
+      useWidthProp(widths),
       useKeyOnly(vertical, 'vertical'),
       'menu'
     )
     const rest = getUnhandledProps(Menu, this.props)
 
-    return <div {...rest} className={classes}>{this.renderChildren()}</div>
+    return <div {...rest} className={classes}>{children}</div>
   }
 }

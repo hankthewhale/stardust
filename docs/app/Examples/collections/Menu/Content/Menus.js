@@ -1,14 +1,44 @@
-import React from 'react'
-import { Button, Menu } from 'stardust'
+import React, { Component } from 'react'
+import { Menu } from 'stardust'
 
-const Menus = () => {
-  return (
-    <Menu>
-      <Menu.Item href="http://www.google.com">Visit Google</Menu.Item>
-      <Menu.Item link>Link via prop</Menu.Item>
-      <Menu.Item onClick={}>Javascript Link</Menu.Item>
-    </Menu>
-  )
+export default class Menus extends Component {
+  handleItemClick = (name) => this.setState({ activeItem: name })
+
+  render() {
+    const { activeItem } = this.state
+
+    return (
+      <Menu>
+        <Menu.Item
+          active={activeItem === 'browse'}
+          onClick={() => this.handleItemClick('browse')}
+        >
+          Browse
+        </Menu.Item>
+
+        <Menu.Item
+          active={activeItem === 'submit'}
+          onClick={() => this.handleItemClick('submit')}
+        >
+          Submit
+        </Menu.Item>
+
+       <Menu.Menu position='right'>
+         <Menu.Item
+           active={activeItem === 'signup'}
+           onClick={() => this.handleItemClick('signup')}
+         >
+           Sign Up
+         </Menu.Item>
+
+         <Menu.Item
+           active={activeItem === 'help'}
+           onClick={() => this.handleItemClick('help')}
+         >
+           Help
+         </Menu.Item>
+       </Menu.Menu>
+      </Menu>
+    )
+  }
 }
-
-export default Menus
