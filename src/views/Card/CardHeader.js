@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 
 import {
   customPropTypes,
+  getElementType,
   getUnhandledProps,
   META,
 } from '../../lib'
@@ -11,8 +12,9 @@ function CardHeader(props) {
   const { className, children, content } = props
   const classes = cx(className, 'header')
   const rest = getUnhandledProps(CardHeader, props)
+  const ElementType = getElementType(CardHeader, props)
 
-  return <div {...rest} className={classes}>{children || content}</div>
+  return <ElementType {...rest} className={classes}>{children || content}</ElementType>
 }
 
 CardHeader._meta = {
@@ -22,6 +24,12 @@ CardHeader._meta = {
 }
 
 CardHeader.propTypes = {
+  /** An element type to render as (string or function). */
+  as: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+
   /** Primary content of the CardHeader. Mutually exclusive with content. */
   children: customPropTypes.every([
     customPropTypes.disallow(['content']),
@@ -34,10 +42,7 @@ CardHeader.propTypes = {
   /** Primary content of the CardHeader. Mutually exclusive with children. */
   content: customPropTypes.every([
     customPropTypes.disallow(['children']),
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    PropTypes.node,
   ]),
 }
 
